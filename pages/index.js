@@ -53,7 +53,22 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <Button primary size="huge">
+    <Button
+      primary
+      size="huge"
+      onClick={() => {
+        trackEvent(EVENT_CATEGORY.COMPONENT_EVENT, {
+          eventSubType: EVENT_TYPE.INTERACTION,
+          component: {
+            id: 'homepage:cta-click',
+            type: 'Button',
+            text: 'Custom Link Interaction',
+            position: -1,
+            totalCount: -1,
+          },
+        });
+      }}
+    >
       Custom Link Interaction
       <Icon name="right arrow" />
     </Button>
@@ -170,7 +185,7 @@ ResponsiveContainer.propTypes = {
 const HomepageLayout = () => (
   <div>
     <Head>
-      <title>Create Next App</title>
+      <title>DCP Analytics Module Sandbox</title>
     </Head>
     <Script
       src="https://assets.adobedtm.com/7a84fdea953b/09aece6f582f/launch-e6cc9ebc113b-development.min.js"
