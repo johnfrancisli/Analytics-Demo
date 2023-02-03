@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { createMedia } from '@artsy/fresnel';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
   Button,
   Container,
@@ -57,14 +57,20 @@ const HomepageHeading = ({ mobile }) => (
       primary
       size="huge"
       onClick={() => {
-        trackEvent(EVENT_CATEGORY.COMPONENT_EVENT, {
-          eventSubType: EVENT_TYPE.INTERACTION,
+        MwaAnalytics.trackEvent(MwaAnalytics.EVENT_CATEGORY.COMPONENT_EVENT, {
+          eventSubType: MwaAnalytics.EVENT_TYPE.INTERACTION,
           component: {
             id: 'homepage:cta-click',
             type: 'Button',
             text: 'Custom Link Interaction',
             position: -1,
-            totalCount: -1,
+            totalCount: 1,
+            attributes: {
+              test: 'test',
+            },
+          },
+          attributes: {
+            test: 'test',
           },
         });
       }}
@@ -182,92 +188,105 @@ ResponsiveContainer.propTypes = {
   children: PropTypes.node,
 };
 
-const HomepageLayout = () => (
-  <div>
-    <Head>
-      <title>DCP Analytics Module Sandbox</title>
-    </Head>
-    <Script
-      src="https://assets.adobedtm.com/7a84fdea953b/09aece6f582f/launch-e6cc9ebc113b-development.min.js"
-      strategy="beforeInteractive"
-      async
-    />
-    <Script
-      src="https://localdev.lululemon.com:9000/validation-configs/3.3.0/validation-configs-remoteEntry.js"
-      strategy="beforeInteractive"
-      async
-    />
-    <Script
-      src="http://localhost:4000/library/browser/mwa-analytics.js"
-      async
-      strategy="beforeInteractive"
-    />
-    <ResponsiveContainer>
-      <Segment style={{ padding: '8em 0em' }} vertical>
-        <Grid container stackable verticalAlign="middle">
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <Image
-                bordered
-                rounded
-                size="large"
-                src="https://images.lululemon.com/is/image/lululemon/LW3EZXS_047748_1?$product_tile$&wid=320&op_usm=0.8,1,10,0&fmt=webp&qlt=80,1&fit=constrain,0&op_sharpen=0&resMode=sharp2&iccEmbed=0&printRes=72"
-              />
-            </Grid.Column>
-            <Grid.Column floated="right" width={6}>
-              <Header
-                as="h3"
-                style={{
-                  fontSize: '2.25em',
-                  lineHeight: 1,
-                }}
-              >
-                Back in Action Long Sleeve Shirt Nulu
-              </Header>
-              <div style={{ marginBottom: '2rem' }}>
-                <span style={{ fontSize: '1.3rem' }}>$45</span>
-                <span style={{ fontSize: '0.875rem' }}> CAD</span>
-              </div>
-              <Grid.Column textAlign="center">
-                <Button primary size="huge">
-                  ADD TO BAG
-                </Button>
-              </Grid.Column>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Segment>
+const HomepageLayout = () => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      MwaAnalytics.initializeAnalytics('TEST', {}, [], true);
+    }
+  });
 
-      <Segment inverted vertical style={{ padding: '5em 0em' }}>
-        <Container>
-          <Grid divided inverted stackable>
+  return (
+    <div>
+      <Head>
+        <title>Create Next App</title>
+      </Head>
+      <Script
+        src="https://assets.adobedtm.com/7a84fdea953b/09aece6f582f/launch-e6cc9ebc113b-development.min.js"
+        strategy="beforeInteractive"
+        async
+      />
+      <Script
+        src={`https://public-package-bucket-temp.s3.us-west-2.amazonaws.com/transformation-configs/latest/transformation-configs-remoteEntry.js?time=${Date.now()}`}
+        strategy="beforeInteractive"
+        defer
+        async
+      />
+      <Script
+        src={`https://public-package-bucket-temp.s3.us-west-2.amazonaws.com/validation-configs/latest/validation-configs-remoteEntry.js?time=${Date.now()}`}
+        strategy="beforeInteractive"
+        defer
+        async
+      />
+      <Script
+        src={`https://public-package-bucket-temp.s3.us-west-2.amazonaws.com/lam-model/latest/lam-model-remoteEntry.js?time=${Date.now()}`}
+        strategy="beforeInteractive"
+        defer
+        async
+      />
+      <Script
+        src={`https://public-package-bucket-temp.s3.us-west-2.amazonaws.com/%40lululemon/mwa-analytics/latest/browser/mwa-analytics.js?time=${Date.now()}`}
+        async
+        defer
+        strategy="beforeInteractive"
+      />
+      <ResponsiveContainer>
+        <Segment style={{ padding: '8em 0em' }} vertical>
+          <Grid container stackable verticalAlign="middle">
             <Grid.Row>
-              <Grid.Column width={3}>
-                <Header inverted as="h4" content="About" />
-                <List link inverted>
-                  <List.Item as="a">Repository</List.Item>
-                  <List.Item as="a">Confluence Page</List.Item>
-                  <List.Item as="a">DATASE Board</List.Item>
-                </List>
+              <Grid.Column width={8}>
+                <Image
+                  bordered
+                  rounded
+                  size="large"
+                  src="https://res.cloudinary.com/yerdle/image/upload/w_1000,h_1000,c_fit,q_auto:eco,f_auto/v1637183710/production/partners/14/inventoryItem/1437354/ed9lysxaeighwilr0fh3.jpg"
+                />
               </Grid.Column>
-              <Grid.Column width={3}>
-                <Header inverted as="h4" content="Services" />
-                <List link inverted>
-                  <List.Item as="a">Support</List.Item>
-                </List>
-              </Grid.Column>
-              <Grid.Column width={7}>
-                <Header as="h4" inverted>
-                  Provided to you by DCP Platform Team
+              <Grid.Column floated="right" width={6}>
+                <Header as="h3" style={{ fontSize: '2em' }}>
+                  Quick Pace Short Sleeve Shirt
                 </Header>
-                <p>For questions and inquiries please contact us via teams.</p>
+                <p style={{ fontSize: '1.33em' }}>$45.00</p>
+                <Grid.Column textAlign="center">
+                  <Button size="huge">ADD TO BAG</Button>
+                </Grid.Column>
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </Container>
-      </Segment>
-    </ResponsiveContainer>
-  </div>
-);
+        </Segment>
+
+        <Segment inverted vertical style={{ padding: '5em 0em' }}>
+          <Container>
+            <Grid divided inverted stackable>
+              <Grid.Row>
+                <Grid.Column width={3}>
+                  <Header inverted as="h4" content="About" />
+                  <List link inverted>
+                    <List.Item as="a">Repository</List.Item>
+                    <List.Item as="a">Confluence Page</List.Item>
+                    <List.Item as="a">DATASE Board</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header inverted as="h4" content="Services" />
+                  <List link inverted>
+                    <List.Item as="a">Support</List.Item>
+                  </List>
+                </Grid.Column>
+                <Grid.Column width={7}>
+                  <Header as="h4" inverted>
+                    Provided to you by DCP Platform Team
+                  </Header>
+                  <p>
+                    For questions and inquiries please contact us via teams.
+                  </p>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        </Segment>
+      </ResponsiveContainer>
+    </div>
+  );
+};
 
 export default HomepageLayout;
