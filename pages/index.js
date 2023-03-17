@@ -195,6 +195,9 @@ const HomepageLayout = () => {
     }
   });
 
+  const host = 'https://dxa4wb90x7ize.cloudfront.net/stage/';
+  const version = 'latest';
+
   return (
     <div>
       <Head>
@@ -206,25 +209,31 @@ const HomepageLayout = () => {
         async
       />
       <Script
-        src={`https://dxa4wb90x7ize.cloudfront.net/stage/transformation-configs/latest/transformation-configs-remoteEntry.js?time=${Date.now()}`}
+        src={`${host}transformation-configs/${version}/transformation-configs-remoteEntry.js?time=${Date.now()}`}
         strategy="beforeInteractive"
         defer
         async
       />
       <Script
-        src={`https://dxa4wb90x7ize.cloudfront.net/stage/validation-configs/latest/validation-configs-remoteEntry.js?time=${Date.now()}`}
+        src={`${host}validation-configs/${version}/validation-configs-remoteEntry.js?time=${Date.now()}`}
         strategy="beforeInteractive"
         defer
         async
       />
       <Script
-        src={`https://dxa4wb90x7ize.cloudfront.net/stage/lam-model/latest/lam-model-remoteEntry.js?time=${Date.now()}`}
+        src={`${host}lam-model/${version}/lam-model-remoteEntry.js?time=${Date.now()}`}
         strategy="beforeInteractive"
         defer
         async
       />
       <Script
-        src={`https://dxa4wb90x7ize.cloudfront.net/stage/%40lululemon/mwa-analytics/latest/browser/mwa-analytics.js?time=${Date.now()}`}
+        src={`${host}experiment-module/${version}/experiment-module-remoteEntry.js?time=${Date.now()}`}
+        strategy="beforeInteractive"
+        defer
+        async
+      />
+      <Script
+        src={`${host}%40lululemon/mwa-analytics/latest/browser/mwa-analytics.js?time=${Date.now()}`}
         async
         defer
         strategy="beforeInteractive"
